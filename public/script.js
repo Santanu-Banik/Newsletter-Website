@@ -17,12 +17,18 @@ function dismissMessage() {
         
         <div class="form-container" id="formContainer">
             <form id="subscriptionForm">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-        
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-        
+            
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+
                 <div class="consent">
                     <input type="checkbox" id="consent" name="consent" required>
                     <label for="consent">I agree to receive emails and understand that I can unsubscribe at any time.</label>
