@@ -3,6 +3,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
 import { SNSClient, SubscribeCommand, PublishCommand } from '@aws-sdk/client-sns';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,6 +32,7 @@ app.post('/subscribe', async (req, res) => {
         const data = await snsClient.send(new SubscribeCommand(params));
         res.status(200).json({ message: 'Subscription successful! Check your email to confirm.' });
     } catch (error) {
+	console.error('Subscription error:', error);
         res.status(500).json({ message: 'Subscription failed lol.', error });
     }
 });
