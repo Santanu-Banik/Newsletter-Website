@@ -4,16 +4,15 @@ import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
 import { SNSClient, SubscribeCommand, PublishCommand } from '@aws-sdk/client-sns';
 
-// Determine __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const port = 3000;
+const port = 80;
 
 // Create SNS client
-const snsClient = new SNSClient({ region: 'ap-south-1' });
-const topicArn = 'arn:aws:sns:ap-south-1:058264182426:newsletterService';  // Replace with your Topic ARN
+const snsClient = new SNSClient({ region: 'us-east-1' });
+const topicArn = 'arn:aws:sns:us-east-1:058264182426:SeaNewsletter';
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
