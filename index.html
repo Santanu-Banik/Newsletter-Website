@@ -1,17 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Newsletter Subscription</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeaNews</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.png" type="image/png">
 </head>
 <body>
-    <h1>Subscribe to Our Newsletter</h1>
-    <form id="subscriptionForm">
-        <label for="email">Email:</label>
-        <input type="email" id="email" required>
-        <button type="submit">Subscribe</button>
-    </form>
-    <div id="messageSent" style="display:none;">Subscription Successful! Check your email to confirm.</div>
+    <div class="container" id="mainContainer">
+        <div class="header">
+            <h1>Stay Updated with Our Newsletter</h1>
+            <p>Subscribe to receive the latest news, special offers, and updates directly to your inbox.</p>
+        </div>
 
-    <script type="module" src="script.js"></script>
+        <div class="benefits">
+            <h2>Why Subscribe?</h2>
+            <ul>
+                <li>Exclusive Content: Get access to content not available on our website.</li>
+                <li>Special Offers: Be the first to know about our special discounts and promotions.</li>
+                <li>Latest News: Stay informed about the latest trends and updates in the industry.</li>
+            </ul>
+        </div>
+
+        <div class="form-container" id="formContainer">
+            <form id="subscriptionForm">
+
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+
+                <div class="consent">
+                    <input type="checkbox" id="consent" name="consent" required>
+                    <label for="consent">I agree to receive emails and understand that I can unsubscribe at any time.</label>
+                </div>
+
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
+

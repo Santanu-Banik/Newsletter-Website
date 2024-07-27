@@ -1,0 +1,98 @@
+/* message_style.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #310560, #0d3882);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.form-container {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 30px;
+    border-radius: 55px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+}
+
+.form-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('newsletter.webp');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+    z-index: -1;
+}
+
+.header h1 {
+    margin-top: 0;
+    color: #ffffff;
+    text-align: center;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1.2em;
+}
+
+.form-group input, .form-group textarea {
+    width: 94%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.form-group input {
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.form-group textarea {
+    background-color: rgba(255, 255, 255, 0.7);
+    resize: vertical;
+}
+
+.form-group button {
+    width: 50%;
+    margin: 25px auto 0;
+    padding: 15px;
+    background: linear-gradient(to right, #ff416c, #ff4b2b);
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-group button:hover {
+    background: linear-gradient(to right, #ff4b2b, #ff416c);
+}
+
+.message-sent {
+    display: none;
+    color: white;
+    text-align: center;
+}
