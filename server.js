@@ -14,7 +14,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const port = 3000; // change port to http 80
+const port = 80; // change port to http 80
 
 // Create SNS client
 const snsClient = new SNSClient({ region: 'us-east-1' });
