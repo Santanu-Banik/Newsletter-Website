@@ -141,5 +141,5 @@ async function fetchAndSendNews() {
     }
 }
 
-const job = new CronJob('* * * * *', fetchAndSendNews); // Every minute
+const job = new CronJob('0 * * * *', fetchAndSendNews); // Every minute
 job.start();
