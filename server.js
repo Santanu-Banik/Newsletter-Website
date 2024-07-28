@@ -2,10 +2,11 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
-import { SNSClient, SubscribeCommand, PublishCommand } from '@aws-sdk/client-sns';
+import { SNSClient, SubscribeCommand, PublishCommand, ListSubscriptionsByTopicCommand } from '@aws-sdk/client-sns';
 import dotenv from 'dotenv';
-import fs from 'fs';
 import { createObjectCsvWriter } from 'csv-writer';
+import { CronJob } from 'cron';
+import NewsAPI from 'newsapi';
 
 dotenv.config();
 
@@ -18,6 +19,10 @@ const port = 3000; // change port to http 80
 // Create SNS client
 const snsClient = new SNSClient({ region: 'us-east-1' });
 const topicArn = 'arn:aws:sns:us-east-1:058264182426:SeaNewsletter';
+
+// Create NewsAPI client
+const newsapi = new NewsAPI(process.env.NEWSAPI_KEY);
+let currentPage = 1;
 
 const csvWriter = createObjectCsvWriter({
     path: 'subscribers.csv',
@@ -80,3 +85,61 @@ app.get('/admin', (req, res) => {
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
+
+// Function to get the number of subscribers
+async function getSubscriberCount() {
+    try {
+        const data = await snsClient.send(new ListSubscriptionsByTopicCommand({ TopicArn: topicArn }));
+        const activeSubscriptions = data.Subscriptions.filter(subscription => subscription.SubscriptionArn != 'Deleted');
+        return activeSubscriptions.length;
+    } catch (error) {
+        console.error('Error fetching subscribers:', error);
+        return 0; // Return 0 if there was an error
+    }
+}
+
+// Function to fetch and send news
+async function fetchAndSendNews() {
+    try {
+        const subscriberCount = await getSubscriberCount();
+        if (subscriberCount === 0) {
+            console.log('No subscribers to send news to.');
+            return; // Exit if there are no subscribers
+        }
+
+        const response = await newsapi.v2.topHeadlines({
+            country: 'in',
+            category: 'general',
+            pageSize: 1,
+            page: currentPage
+        });
+
+        const articles = response.articles;
+        if (!articles.length) {
+            console.log('No news articles found.');
+            return; // Exit if no articles are found
+        }
+
+        let message = 'Latest News:\n\n';
+        articles.forEach((article, index) => {
+            message += `${article.title}\n${article.url}\n\n`;
+        });
+
+        const params = {
+            TopicArn: topicArn,
+            Message: message,
+            Subject: 'Latest News'
+        };
+
+        const data = await snsClient.send(new PublishCommand(params));
+        console.log('Newsletter sent successfully:', data);
+
+        currentPage++;
+
+    } catch (error) {
+        console.error('Error sending newsletter:', error);
+    }
+}
+
+const job = new CronJob('* * * * *', fetchAndSendNews); // Every minute
+job.start();
