@@ -17,8 +17,8 @@ const app = express();
 const port = 80; // change port to http 80
 
 // Create SNS client
-const snsClient = new SNSClient({ region: 'us-east-1' });
-const topicArn = 'arn:aws:sns:us-east-1:058264182426:SeaNewsletter';
+const snsClient = new SNSClient({ region: process.env.AWS_REGION });
+const topicArn = process.env.TOPIC_ARN;
 
 // Create NewsAPI client
 const newsapi = new NewsAPI(process.env.NEWSAPI_KEY);
